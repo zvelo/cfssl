@@ -1,0 +1,26 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - CGO_ENABLED=0 go get -v -u github.com/cloudflare/cfssl/cmd/...
+
+test:
+  override:
+    - cp $(which cfssl-bundle) .
+    - cp $(which cfssl-certinfo) .
+    - cp $(which cfssl-newkey) .
+    - cp $(which cfssl-scan) .
+    - cp $(which cfssl) .
+    - cp $(which cfssljson) .
+    - cp $(which mkbundle) .
+    - cp $(which multirootca) .
+    - docker build -t zvelo/cfssl .
+
+deployment:
+  master:
+    branch: master
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push zvelo/cfssl
