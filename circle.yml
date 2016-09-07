@@ -5,7 +5,14 @@ machine:
 dependencies:
   override:
     - sudo find /usr/local/go/pkg/linux_amd64 -name '*.a' -exec chmod 666 {} \;
-    - CGO_ENABLED=0 go get -v -u --ldflags '-extldflags "-static"' github.com/cloudflare/cfssl/cmd/...
+    - go get -v -u --ldflags '-extldflags "-static"' github.com/cloudflare/cfssl/cmd/cfssl
+    - CGO_ENABLED=0 go get -v -u --ldflags '-extldflags "-static"' github.com/cloudflare/cfssl/cmd/cfssl-bundle
+    - CGO_ENABLED=0 go get -v -u --ldflags '-extldflags "-static"' github.com/cloudflare/cfssl/cmd/cfssl-certinfo
+    - CGO_ENABLED=0 go get -v -u --ldflags '-extldflags "-static"' github.com/cloudflare/cfssl/cmd/cfssl-newkey
+    - CGO_ENABLED=0 go get -v -u --ldflags '-extldflags "-static"' github.com/cloudflare/cfssl/cmd/cfssl-scan
+    - CGO_ENABLED=0 go get -v -u --ldflags '-extldflags "-static"' github.com/cloudflare/cfssl/cmd/cfssljson
+    - CGO_ENABLED=0 go get -v -u --ldflags '-extldflags "-static"' github.com/cloudflare/cfssl/cmd/mkbundle
+    - CGO_ENABLED=0 go get -v -u --ldflags '-extldflags "-static"' github.com/cloudflare/cfssl/cmd/multirootca
 
 test:
   override:
