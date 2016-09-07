@@ -4,7 +4,8 @@ machine:
 
 dependencies:
   override:
-    - go get -v -u --ldflags '-extldflags "-static"' github.com/cloudflare/cfssl/cmd/...
+    - sudo find /usr/local/go/pkg/linux_amd64 -name '*.a' -exec chmod 666 {} \;
+    - CGO_ENABLED=0 go get -v -u --ldflags '-extldflags "-static"' github.com/cloudflare/cfssl/cmd/...
 
 test:
   override:
