@@ -4,7 +4,7 @@ machine:
 
 dependencies:
   override:
-    - go get -v -u github.com/cloudflare/cfssl/cmd/...
+    - go get -v -u --ldflags '-extldflags "-static"' github.com/cloudflare/cfssl/cmd/...
 
 test:
   override:
