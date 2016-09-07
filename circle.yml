@@ -4,7 +4,7 @@ machine:
 
 dependencies:
   override:
-    - CGO_ENABLED=0 go get -v -u github.com/cloudflare/cfssl/cmd/...
+    - go get -v -u github.com/cloudflare/cfssl/cmd/...
 
 test:
   override:
@@ -23,4 +23,4 @@ deployment:
     branch: master
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker push zvelo/cfssl
+      - docker push $DOCKER_REPO
