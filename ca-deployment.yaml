@@ -1,0 +1,37 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ca-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: ca
+    spec:
+      containers:
+        - name: cfssl
+          image: zvelo/cfssl
+          command:
+            - /multirootca
+          args:
+            - -roots
+            - /etc/cfssl/multirootca.ini
+            - -tls-cert
+            - /etc/cfssl/multirootca.pem
+            - -tls-key
+            - /etc/cfssl/multirootca-key.pem
+            - -a
+            - :443
+          ports:
+            - containerPort: 443
+              name: https
+              protocol: TCP
+          volumeMounts:
+            - name: ca
+              mountPath: /etc/cfssl
+              readOnly: true
+      volumes:
+        - name: ca
+          secret:
+            secretName: ca
